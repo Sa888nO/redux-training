@@ -1,16 +1,34 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { addCashAction, getCashAction } from "./store/cashReducer";
+import {
+  addCustomerAction,
+  removeCustomersAction,
+} from "./store/customerReducer";
 
 function App() {
   const dispatch = useDispatch();
   const cash = useSelector((state) => state.cash.cash);
+  const customers = useSelector((state) => state.customers.customers);
 
   const addCash = (cash) => {
-    dispatch({ type: "ADD_CASH", payload: cash });
+    dispatch(addCashAction(cash));
   };
 
   const getCash = (cash) => {
-    dispatch({ type: "GET_CASH", payload: cash });
+    dispatch(getCashAction(cash));
+  };
+
+  const addCust = (name) => {
+    const customer = {
+      name,
+      id: Date.now(),
+    };
+    dispatch(addCustomerAction(customer));
+  };
+  const removeCust = (customer) => {
+    dispatch(removeCustomersAction(customer.id));
   };
 
   return (
@@ -23,7 +41,22 @@ function App() {
         <button onClick={() => getCash(Number(prompt()))}>
           Снять со счета
         </button>
+        <button onClick={() => addCust(prompt())}>Добавить Клиента</button>
+        <button onClick={() => getCash(Number(prompt()))}>
+          Удалить Клиента
+        </button>
       </div>
+      {customers.length > 0 ? (
+        <div>
+          {customers.map((cust) => (
+            <div onClick={() => removeCust(cust)} style={{ fontSize: "50px" }}>
+              {cust.name}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ fontSize: "50px" }}>Клиентов нет</div>
+      )}
     </div>
   );
 }
