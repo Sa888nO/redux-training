@@ -1,6 +1,7 @@
 import { type } from "@testing-library/user-event/dist/type";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { fetchCustomers } from "./asyncAction/customers";
 import { addCashAction, getCashAction } from "./store/cashReducer";
 import {
   addCustomerAction,
@@ -42,8 +43,8 @@ function App() {
           Снять со счета
         </button>
         <button onClick={() => addCust(prompt())}>Добавить Клиента</button>
-        <button onClick={() => getCash(Number(prompt()))}>
-          Удалить Клиента
+        <button onClick={() => dispatch(fetchCustomers())}>
+          Получить клиентов из базы
         </button>
       </div>
       {customers.length > 0 ? (

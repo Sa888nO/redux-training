@@ -18,9 +18,9 @@ export const cashReducer = (state = defaultState, action) => {
 
 export const addCashAction = (payload) => ({
   type: addCash,
-  payload: payload,
+  payload,
 });
 export const getCashAction = (payload) => ({
   type: getCash,
-  payload: payload,
+  payload,
 });
